@@ -10,6 +10,12 @@ namespace IPB.Models
         public Student Student{get;set;}
         public Assigment Assigment { get; set; }
         public double Points { set; get; }
-        public double StudentWork { set; get; }
+        public string StudentWork { set; get; }
+
+        public void Submit()
+        {
+           //push points to server
+
+        }
     }
 }

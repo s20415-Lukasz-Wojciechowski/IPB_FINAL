@@ -9,7 +9,10 @@ namespace IPB.Models
     {
         private static int INDEX_NUMBER = 0;
         public string StudentNumber { get; } = "s" + INDEX_NUMBER++;
-        public HashSet<Project> projects { get; } = new HashSet<Project>();
+        public HashSet<Project> projects { get; set; } = new HashSet<Project>();
         public Teacher? Teacher { get; set; }
+        public HashSet<Assigment> Assigments { get; set; } = new HashSet<Assigment>();
+
+       
     }
 }

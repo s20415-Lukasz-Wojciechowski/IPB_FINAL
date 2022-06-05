@@ -1,0 +1,21 @@
+﻿@page "/ViewTeacher"
+<h3>ViewTeacher</h3>
+<h4>Assigments</h4>
+<ul>
+    @foreach (var item in Teacher.assigments) { 
+        <li>@item.Description</li>
+    }
+</ul>
+
+
+
+@code {       
+
+    public Models.Teacher Teacher;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Teacher = Data.SampleData.Teachers[0];
+    }
+
+}

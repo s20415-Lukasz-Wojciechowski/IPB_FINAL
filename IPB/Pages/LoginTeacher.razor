@@ -1,17 +1,32 @@
 ﻿@page "/LoginTeacher"
-
+@inject NavigationManager NavigationManager
 <h3>Login as a Teacher</h3>
 
-<form>
-    <label>email</label>
-    <input type="email" />
+<EditForm Model="model1">
+    <p>
+         <InputText @ref="LoginInput" @bind-Value="model1" placeholder="Login" />
+         <InputText type="password" @ref="PasswordInput" @bind-Value="model2" placeholder="Password" />
+    </p>
 
-    <label>password</label>
-    <input type="password" />
-
-    <button>LogIn</button>
-</form>
+    <button @onclick="Submit">Submit</button>
+</EditForm>
 
 @code {
+    string model1 = "";
+    string model2 = "";
+    InputText LoginInput;
+    InputText PasswordInput;
+
+    void Submit()
+    {
+        var result = Data.SampleData.Teachers.Any(e => e.Password == PasswordInput.Value && e.Email == LoginInput.Value);
+        if (!result)
+        {
+            NavigationManager.NavigateTo("/");
+            return;
+        }
+
+        NavigationManager.NavigateTo("/TeacherPage");
+    }
 
 }

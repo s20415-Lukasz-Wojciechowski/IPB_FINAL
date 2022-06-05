@@ -1,0 +1,52 @@
+﻿@page "/CreateAssigment"
+@inject NavigationManager nav
+<h3>CreateAssigmentPage</h3>
+
+<EditForm Model="model1">
+    <p>
+        <label>Deadline</label><InputText   type="datetime-local" @ref="DeadlineInput" @bind-Value="model1" placeholder="Deadline" /><br />
+        <label>Description</label><input  type="file" placeholder="Description" /><br />
+        <label>Points</label><InputText   type="number" @ref="PointsInput" @bind-Value="model2" placeholder="PointsInput" /><br />
+        <label>Quality Test Data:</label><br />
+        <label>Quality Test</label><input   type="file"  placeholder="QualityTest" /><br />
+        <label>Quality Test Description</label><input    type="file" placeholder="QualityTest Description" /><br />
+    </p>
+   
+
+    <button @onclick="Submit">Submit</button>
+</EditForm>
+
+@code {
+    string model1 = "";
+    string model2 = "";
+    InputText DeadlineInput;
+    InputText PointsInput;
+    Models.Teacher Teacher;
+    protected override void OnInitialized()
+    {
+        Teacher = Data.SampleData.Teachers[0];
+    }
+
+    void Submit()
+    {
+
+        var date = DateTime.Parse(DeadlineInput.Value);
+        var point = Int32.Parse(model2);
+        var assigment = new Models.Assigment { DateTime = date, Description = Data.SampleData.RandomString(5), MaxPoints = point, Teacher = Teacher };
+        var qualityTest = new Models.Requirements { Assigment = assigment, Description = Data.SampleData.RandomString(15), QualityTest = Data.SampleData.RandomString(35) };
+        assigment.Requirements.Add(qualityTest);
+        Teacher.Students = new HashSet<Models.Student> (Data.SampleData.Students);
+        Teacher.assigments.Add(assigment);
+        foreach(var s in Teacher.Students)
+        {
+            s.Assigments.Add(assigment);
+        }
+        assigment.Students = Teacher.Students;
+        nav.NavigateTo("/ViewTeacher");
+        return;
+
+        //Action denied
+    }
+
+
+}

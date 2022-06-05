@@ -14,6 +14,10 @@ namespace IPB.Models
         public string Password { set; get; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateOfBirth { set; get; }
-        public Teacher? Teacher { get; set; }
+        
+        public void Login()
+        {
+            //check in database if such user exist
+        }
     }
 }

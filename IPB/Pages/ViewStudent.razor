@@ -1,0 +1,43 @@
+﻿@page "/ViewStudent"
+@inject NavigationManager navig
+<h3>ViewStudent</h3>
+<h4>Assigments</h4>
+<ul>
+    @foreach (var item in Student.Assigments)
+    {
+        <li>
+            <p>@item.Description</p>
+            <input type="file"/>
+            <button @onclick="ObtainPoints">Perform Test</button>
+            <p>@value </p>
+            <button @onclick="Submit">Submit</button>
+        </li>
+    }
+</ul>
+
+
+
+@code {
+
+    public string? value;
+    public Models.Student Student;
+    private double _score = 0d;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Student = Data.SampleData.Students[0];
+    }
+
+    public void Submit()
+    {
+        var project = new Models.Project() {Assigment= Student.Assigments.ElementAt(0), Points=_score, Student = Student, StudentWork= Data.SampleData.RandomString(32)};
+        Student.Assigments.Remove(Student.Assigments.ElementAt(0));
+        navig.NavigateTo("/StudentPage");
+    }
+    public void ObtainPoints()
+    {
+        var score = Student.Assigments.ElementAt(0).GetPointFromQualityTest();
+        value = "The current score =" + score;
+        _score = score;
+    }
+}
